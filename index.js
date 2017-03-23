@@ -4,45 +4,48 @@
 
 mofron.effect.Shadow = class extends mofron.Effect {
     
+    constructor (prm) {
+        try {
+            super();
+            this.name('Shadow');
+            
+            this.prmOpt({value : prm});
+        } catch (e) {
+            console.error(e.stack);
+            throw e;
+        }
+    }
+    
     value (val) {
         try {
-            var _val = (undefined === val) ? null : val;
-            if (null === _val) {
-                if (null === this.param) {
-                    return 20;
-                }
-                return this.param;
+            if (undefined === val) {
+                return (undefined === this.m_value) ? 50 : this.m_value;
             }
-            if ('number' !== typeof _val) {
+
+            if (('number' !== typeof val) || (0 > val)) {
                 throw new Error('invalid parameter');
             }
-            this.param = _val;
+            this.m_value = val;
         } catch (e) {
             console.error(e.stack);
             throw e;
         }
     }
     
-    initEffect (flg, eff) {
+    enable (tgt) {
         try {
-            if (true === flg) {
-                eff.target.style('box-shadow', null);
-            } else {
-                eff.target.style('box-shadow', '0px '+ this.value()/2 + 'px '+ this.value() +'px '+ '0px gray');
-            }
+            tgt.style({
+                'box-shadow' : '0px '+ this.value()/2 + 'px '+ this.value() +'px '+ '0px gray'
+            });
         } catch (e) {
             console.error(e.stack);
             throw e;
         }
     }
     
-    effectConts (flg, eff) {
+    disable (tgt) {
         try {
-            if (true === flg) {
-                eff.target.style('box-shadow', '0px '+ this.value()/2 + 'px '+ this.value() +'px '+ '0px gray');
-            } else {
-                eff.target.style('box-shadow', null);
-            }
+            tgt.style({'box-shadow' : null});
         } catch (e) {
             console.error(e.stack);
             throw e;
