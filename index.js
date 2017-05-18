@@ -8,8 +8,9 @@ mofron.effect.Shadow = class extends mofron.Effect {
         try {
             super();
             this.name('Shadow');
-            
-            this.prmOpt({value : prm});
+            this.prmOpt(
+                ('number' !== typeof prm) ? prm : {value : prm}
+            );
         } catch (e) {
             console.error(e.stack);
             throw e;
@@ -34,6 +35,7 @@ mofron.effect.Shadow = class extends mofron.Effect {
     
     enable (tgt) {
         try {
+console.log(tgt);
             tgt.style({
                 'box-shadow' : '0px '+ this.value()/2 + 'px '+ this.value() +'px '+ '0px gray'
             });
