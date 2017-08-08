@@ -35,7 +35,6 @@ mofron.effect.Shadow = class extends mofron.Effect {
     
     enable (tgt) {
         try {
-console.log(tgt);
             tgt.style({
                 'box-shadow' : '0px '+ this.value()/2 + 'px '+ this.value() +'px '+ '0px gray'
             });
@@ -54,3 +53,4 @@ console.log(tgt);
         }
     }
 }
+module.exports = mofron.effect.Shadow;
