@@ -10,13 +10,12 @@ let mf = require('mofron');
  */
 mofron.effect.Shadow = class extends mofron.Effect {
     
-    constructor (prm) {
+    constructor (po, p2) {
         try {
             super();
             this.name('Shadow');
-            this.prmOpt(
-                ('number' !== typeof prm) ? prm : {value : prm}
-            );
+            this.prmMap('value', 'color');
+            this.prmOpt(po, p2);
         } catch (e) {
             console.error(e.stack);
             throw e;
@@ -80,3 +79,4 @@ mofron.effect.Shadow = class extends mofron.Effect {
     }
 }
 module.exports = mofron.effect.Shadow;
+/* end of file */
