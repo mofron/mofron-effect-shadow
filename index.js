@@ -61,7 +61,7 @@ mofron.effect.Shadow = class extends mofron.Effect {
     enable (tgt) {
         try {
             tgt.style({
-                'box-shadow' : '0px '+ this.value()/2 + 'px '+ this.value() +'px '+ '0px ' + this.color().getStyle()
+                'box-shadow' : '0px '+ this.value()/2 + 'rem '+ this.value() +'rem '+ '0rem ' + this.color().getStyle()
             });
         } catch (e) {
             console.error(e.stack);
