@@ -65,7 +65,7 @@ mf.effect.Shadow = class extends mf.Effect {
     enable (tgt) {
         try {
             tgt.style({
-                'box-shadow' : '0rem '+ this.value().number()/2 + 'rem '+ this.value().number() +'rem '+ '0rem ' + this.color().getStyle()
+                'box-shadow' : '0rem '+ this.value().number()/2 + this.value().type() + ' '+ this.value().number() + this.value().type() + ' '+ '0rem ' + this.color().getStyle()
             });
         } catch (e) {
             console.error(e.stack);
