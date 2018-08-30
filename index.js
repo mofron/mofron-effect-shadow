@@ -1,14 +1,15 @@
 /**
  * @file shadow.js
+ * @brief shadow effect for mofron
  * @author simpart
  */
-let mf = require('mofron');
+const mf = require('mofron');
 
 /**
  * @class Shadow
- * @brief Shadow class for mofron effect
+ * @brief shadow effect for mofron
  */
-mofron.effect.Shadow = class extends mofron.Effect {
+mf.effect.Shadow = class extends mf.Effect {
     
     constructor (po, p2) {
         try {
@@ -25,13 +26,14 @@ mofron.effect.Shadow = class extends mofron.Effect {
     value (val) {
         try {
             if (undefined === val) {
-                return (undefined === this.m_value) ? 50 : this.m_value;
+                /* getter */
+                if (undefined === this.m_value) {
+                    this.value('0.5rem');
+                }
+                return this.m_value;
             }
-
-            if (('number' !== typeof val) || (0 > val)) {
-                throw new Error('invalid parameter');
-            }
-            this.m_value = val;
+            /* setter */
+            this.m_value = mf.func.getSizeObj(val);
         } catch (e) {
             console.error(e.stack);
             throw e;
@@ -43,7 +45,9 @@ mofron.effect.Shadow = class extends mofron.Effect {
             if (undefined === clr) {
                 /* getter */
                 if (undefined === this.m_color) {
-                    this.color(new mf.Color(128,128,128));
+                    this.color(
+                        (null === this.component().mainColor()) ? new mf.Color(128,128,128) : this.component().mainColor()
+                    );
                 }
                 return this.m_color;
             }
@@ -61,7 +65,7 @@ mofron.effect.Shadow = class extends mofron.Effect {
     enable (tgt) {
         try {
             tgt.style({
-                'box-shadow' : '0px '+ this.value()/2 + 'rem '+ this.value() +'rem '+ '0rem ' + this.color().getStyle()
+                'box-shadow' : '0rem '+ this.value().number()/2 + 'rem '+ this.value().number() +'rem '+ '0rem ' + this.color().getStyle()
             });
         } catch (e) {
             console.error(e.stack);
