@@ -54,14 +54,14 @@ mf.effect.Shadow = class extends mf.Effect {
      *
      * @param p1 (string) shadow size (css value)
      * @param p1 (undefined) call as getter
-     * @return (Size) size object 
+     * @return (string) shadow size (css value)
      */
     value (prm) {
         try {
             return this.member(
                 'value',
-                'Size',
-                (undefined === prm) ? prm : mf.func.getSize(prm)
+                'string',
+                (undefined === prm) ? prm : mf.func.getSize(prm).toString()
             );
         } catch (e) {
             console.error(e.stack);
@@ -96,8 +96,10 @@ mf.effect.Shadow = class extends mf.Effect {
      */
     enable (tgt) {
         try {
+            let val = mf.func.getSize(this.value());
+            val.value(val.value()/2);
             tgt.style({
-                'box-shadow' : '0rem '+ this.value().value()/2 + this.value().type() + ' '+ this.value().value() + this.value().type() + ' '+ '0rem ' + this.color()
+                'box-shadow' : '0rem '+ val.toString() + ' ' + mf.func.sizeSum(val, val).toString() + ' ' + '0rem ' + this.color()
             });
         } catch (e) {
             console.error(e.stack);
