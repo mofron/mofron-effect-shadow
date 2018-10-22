@@ -1,6 +1,6 @@
 {
   "name": "mofron-effect-shadow",
-  "version": "0.6.3",
+  "version": "0.6.4",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -11,10 +11,10 @@
     "url": "git+https://github.com/simpart/mofron-effect-shadow.git"
   },
   "keywords": [
-    "mofron"
+    "front-end"
   ],
   "author": "simparts",
-  "license": "SEE LICENSE IN LICENSE",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/simpart/mofron-effect-shadow/issues"
   },

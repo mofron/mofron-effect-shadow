@@ -5,17 +5,22 @@
  */
 const mf = require('mofron');
 
-/**
- * @class Shadow
- * @brief shadow effect for mofron
- */
 mf.effect.Shadow = class extends mf.Effect {
-    
+    /**
+     * initialize shadow effect
+     *
+     * @param p1 (object) effect option
+     * @param p1 shadow size
+     * @param p2 shadow color
+     */
     constructor (po, p2) {
         try {
             super();
             this.name('Shadow');
-            this.prmMap('value', 'color');
+            this.prmMap(['value', 'color']);
+            
+            this.value('0.25rem');
+            
             this.prmOpt(po, p2);
         } catch (e) {
             console.error(e.stack);
@@ -23,49 +28,76 @@ mf.effect.Shadow = class extends mf.Effect {
         }
     }
     
-    value (val) {
+    /**
+     * setter/getter target component
+     *
+     * @note private method
+     */
+    component (prm) {
         try {
-            if (undefined === val) {
-                /* getter */
-                if (undefined === this.m_value) {
-                    this.value('0.5rem');
-                }
-                return this.m_value;
+            let ret = super.component(prm);
+            if ( (undefined !== prm) &&
+                 (null === this.color()) ) {
+                this.color(
+                    (null !== prm.mainColor()) ? prm.mainColor() : [128,128,128]
+                );
             }
-            /* setter */
-            this.m_value = mf.func.getSizeObj(val);
+            return ret;
         } catch (e) {
             console.error(e.stack);
             throw e;
         }
     }
     
-    color (clr) {
+    /**
+     * setter/getter shadow size
+     *
+     * @param p1 (string) shadow size (css value)
+     * @param p1 (undefined) call as getter
+     * @return (Size) size object 
+     */
+    value (prm) {
         try {
-            if (undefined === clr) {
-                /* getter */
-                if (undefined === this.m_color) {
-                    this.color(
-                        (null === this.component().mainColor()) ? new mf.Color(128,128,128) : this.component().mainColor()
-                    );
-                }
-                return this.m_color;
-            }
-            /* setter */
-            if (false === mf.func.isInclude(clr, 'Color')) {
-                throw new Error('invalid parameter');
-            }
-            this.m_color = clr;
+            return this.member(
+                'value',
+                'Size',
+                (undefined === prm) ? prm : mf.func.getSize(prm)
+            );
         } catch (e) {
             console.error(e.stack);
             throw e;
         }
     }
     
+    /**
+     * setter/getter shadow color
+     *
+     * @param p1 (string) shadow color (css value)
+     * @param p1 (undefined) call as getter
+     * @return (string) shadow color (css value)
+     */
+    color (prm) {
+        try {
+            return this.member(
+                'color',
+                'string',
+                (undefined === prm) ? prm : mf.func.getColor(prm).toString()
+            );
+        } catch (e) {
+            console.error(e.stack);
+            throw e;
+        }
+    }
+    
+    /**
+     * enable shadow effect
+     *
+     * @note private method
+     */
     enable (tgt) {
         try {
             tgt.style({
-                'box-shadow' : '0rem '+ this.value().value()/2 + this.value().type() + ' '+ this.value().value() + this.value().type() + ' '+ '0rem ' + this.color().getStyle()
+                'box-shadow' : '0rem '+ this.value().value()/2 + this.value().type() + ' '+ this.value().value() + this.value().type() + ' '+ '0rem ' + this.color()
             });
         } catch (e) {
             console.error(e.stack);
@@ -73,10 +105,13 @@ mf.effect.Shadow = class extends mf.Effect {
         }
     }
     
+    /**
+     * disable shadow effet
+     *
+     * @note private method
+     */
     disable (tgt) {
-        try {
-            tgt.style({'box-shadow' : null});
-        } catch (e) {
+        try { tgt.style({'box-shadow' : null}); } catch (e) {
             console.error(e.stack);
             throw e;
         }
