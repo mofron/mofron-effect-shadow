@@ -18,31 +18,7 @@ mf.effect.Shadow = class extends mf.Effect {
             super();
             this.name('Shadow');
             this.prmMap(['value', 'color']);
-            
-            this.value('0.25rem');
-            
             this.prmOpt(po, p2);
-        } catch (e) {
-            console.error(e.stack);
-            throw e;
-        }
-    }
-    
-    /**
-     * setter/getter target component
-     *
-     * @note private method
-     */
-    component (prm) {
-        try {
-            let ret = super.component(prm);
-            if ( (undefined !== prm) &&
-                 (null === this.color()) ) {
-                this.color(
-                    (null !== prm.mainColor()) ? prm.mainColor() : [128,128,128]
-                );
-            }
-            return ret;
         } catch (e) {
             console.error(e.stack);
             throw e;
@@ -61,7 +37,8 @@ mf.effect.Shadow = class extends mf.Effect {
             return this.member(
                 'value',
                 'string',
-                (undefined === prm) ? prm : mf.func.getSize(prm).toString()
+                (undefined === prm) ? prm : mf.func.getSize(prm).toString(),
+                '0.25rem'
             );
         } catch (e) {
             console.error(e.stack);
@@ -89,31 +66,19 @@ mf.effect.Shadow = class extends mf.Effect {
         }
     }
     
-    /**
-     * enable shadow effect
-     *
-     * @note private method
-     */
-    enable (tgt) {
+    contents (cmp) {
         try {
             let val = mf.func.getSize(this.value());
             val.value(val.value()/2);
-            tgt.style({
+            if (null === this.color()) {
+                this.color(
+                   (null !== this.component().mainColor()) ? this.component().mainColor() : [128, 128, 128]
+                );
+            }
+            cmp.style({
                 'box-shadow' : '0rem '+ val.toString() + ' ' + mf.func.sizeSum(val, val).toString() + ' ' + '0rem ' + this.color()
             });
         } catch (e) {
-            console.error(e.stack);
-            throw e;
-        }
-    }
-    
-    /**
-     * disable shadow effet
-     *
-     * @note private method
-     */
-    disable (tgt) {
-        try { tgt.style({'box-shadow' : null}); } catch (e) {
             console.error(e.stack);
             throw e;
         }
