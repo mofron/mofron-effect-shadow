@@ -58,7 +58,8 @@ mf.effect.Shadow = class extends mf.Effect {
             return this.member(
                 'color',
                 'string',
-                (undefined === prm) ? prm : mf.func.getColor(prm).toString()
+                (undefined === prm) ? prm : mf.func.getColor(prm).toString(),
+                'rgb(190,190,190)'
             );
         } catch (e) {
             console.error(e.stack);
