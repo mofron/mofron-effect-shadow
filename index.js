@@ -38,7 +38,21 @@ mf.effect.Shadow = class extends mf.Effect {
                 'value',
                 'string',
                 (undefined === prm) ? prm : mf.func.getSize(prm).toString(),
-                '0.25rem'
+                '0.015rem'
+            );
+        } catch (e) {
+            console.error(e.stack);
+            throw e;
+        }
+    }
+    
+    blur (prm) {
+        try {
+            return this.member(
+                'blur',
+                'string',
+                (undefined === prm) ? prm : mf.func.getSize(prm).toString(),
+                null
             );
         } catch (e) {
             console.error(e.stack);
@@ -69,15 +83,15 @@ mf.effect.Shadow = class extends mf.Effect {
     
     contents (cmp) {
         try {
-            let val = mf.func.getSize(this.value());
-            val.value(val.value()/2);
             if (null === this.color()) {
                 this.color(
                    (null !== this.component().mainColor()) ? this.component().mainColor() : [128, 128, 128]
                 );
             }
+            let val3  = mf.func.sizeSum(this.value(), this.value(), this.value());
+            let blur = (null === this.blur()) ? mf.func.sizeSum(this.value(), this.value()) : this.blur();
             cmp.style({
-                'box-shadow' : '0rem '+ val.toString() + ' ' + mf.func.sizeSum(val, val).toString() + ' ' + '0rem ' + this.color()
+                'box-shadow' : val3+' ' + val3+' ' + blur+' ' + '0rem ' + this.color()
             });
         } catch (e) {
             console.error(e.stack);
