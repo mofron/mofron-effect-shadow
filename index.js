@@ -18,6 +18,12 @@ mf.effect.Shadow = class extends mf.Effect {
             super();
             this.name('Shadow');
             this.prmMap(['value', 'color']);
+            
+            /* default config */
+            this.value("0.015rem");
+            this.color([190,190,190]);
+            this.blur(mf.func.sizeSum(this.value(), this.value()));
+            
             this.prmOpt(po, p2);
         } catch (e) {
             console.error(e.stack);
@@ -33,28 +39,14 @@ mf.effect.Shadow = class extends mf.Effect {
      * @return (string) shadow size (css value)
      */
     value (prm) {
-        try {
-            return this.member(
-                'value',
-                'string',
-                (undefined === prm) ? prm : mf.func.getSize(prm).toString(),
-                '0.015rem'
-            );
-        } catch (e) {
+        try { return this.member("value", "size", prm); } catch (e) {
             console.error(e.stack);
             throw e;
         }
     }
     
     blur (prm) {
-        try {
-            return this.member(
-                'blur',
-                'string',
-                (undefined === prm) ? prm : mf.func.getSize(prm).toString(),
-                null
-            );
-        } catch (e) {
+        try { return this.member("blur", "size", prm); } catch (e) {
             console.error(e.stack);
             throw e;
         }
@@ -68,14 +60,7 @@ mf.effect.Shadow = class extends mf.Effect {
      * @return (string) shadow color (css value)
      */
     color (prm) {
-        try {
-            return this.member(
-                'color',
-                'string',
-                (undefined === prm) ? prm : mf.func.getColor(prm).toString(),
-                'rgb(190,190,190)'
-            );
-        } catch (e) {
+        try { return this.member('color', 'color', prm); } catch (e) {
             console.error(e.stack);
             throw e;
         }
@@ -83,15 +68,9 @@ mf.effect.Shadow = class extends mf.Effect {
     
     contents (cmp) {
         try {
-            if (null === this.color()) {
-                this.color(
-                   (null !== this.component().mainColor()) ? this.component().mainColor() : [128, 128, 128]
-                );
-            }
-            let val3  = mf.func.sizeSum(this.value(), this.value(), this.value());
-            let blur = (null === this.blur()) ? mf.func.sizeSum(this.value(), this.value()) : this.blur();
+            let val3 = mf.func.sizeSum(this.value(), this.value(), this.value());
             cmp.style({
-                'box-shadow' : val3+' ' + val3+' ' + blur+' ' + '0rem ' + this.color()
+                "box-shadow" : val3 + ' ' + val3 + ' ' + this.blur().toString() + ' ' + '0rem ' + this.color().toString()
             });
         } catch (e) {
             console.error(e.stack);
