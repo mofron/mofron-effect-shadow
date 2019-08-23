@@ -43,8 +43,7 @@ mf.effect.Shadow = class extends mf.Effect {
      * @return (string) shadow size (css value)
      */
     value (prm) {
-        try {
-	    return this.member("value", "size", prm); } catch (e) {
+        try { return this.member("value", "size", prm); } catch (e) {
             console.error(e.stack);
             throw e;
         }
@@ -74,7 +73,6 @@ mf.effect.Shadow = class extends mf.Effect {
     contents (cmp) {
         try {
             let val3 = mf.func.sizeSum(this.value(), this.value(), this.value());
-            console.log(val3);
             cmp.style({
                 "box-shadow" : val3 + ' ' + val3 + ' ' + this.blur().toString() + ' ' + '0rem ' + this.color().toString()
             });
