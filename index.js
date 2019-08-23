@@ -20,10 +20,14 @@ mf.effect.Shadow = class extends mf.Effect {
             this.prmMap(['value', 'color']);
             
             /* default config */
-            this.value("0.015rem");
-            this.color([190,190,190]);
-            this.blur(mf.func.sizeSum(this.value(), this.value()));
-            
+	    if (undefined === po) {
+                this.value("0.015rem");
+                this.blur(mf.func.sizeSum(this.value(), this.value()));
+            }
+	    if (undefined === p2) {
+	        this.color([190,190,190]);
+	    }
+	    
             this.prmOpt(po, p2);
         } catch (e) {
             console.error(e.stack);
@@ -39,7 +43,8 @@ mf.effect.Shadow = class extends mf.Effect {
      * @return (string) shadow size (css value)
      */
     value (prm) {
-        try { return this.member("value", "size", prm); } catch (e) {
+        try {
+	    return this.member("value", "size", prm); } catch (e) {
             console.error(e.stack);
             throw e;
         }
@@ -69,6 +74,7 @@ mf.effect.Shadow = class extends mf.Effect {
     contents (cmp) {
         try {
             let val3 = mf.func.sizeSum(this.value(), this.value(), this.value());
+            console.log(val3);
             cmp.style({
                 "box-shadow" : val3 + ' ' + val3 + ' ' + this.blur().toString() + ' ' + '0rem ' + this.color().toString()
             });
