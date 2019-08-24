@@ -20,6 +20,7 @@ mf.effect.Shadow = class extends mf.Effect {
             this.prmMap(['value', 'color']);
             
             /* default config */
+	    this.blur("0rem");
 	    if (undefined === po) {
                 this.value("0.015rem");
                 this.blur(mf.func.sizeSum(this.value(), this.value()));
