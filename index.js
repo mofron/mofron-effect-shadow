@@ -1,35 +1,50 @@
 /**
  * @file shadow.js
  * @brief shadow effect for mofron
- * @author simpart
+ *        this effect makes the component has a shadow.
+ * @feature the size changes according to the value of the 'value' parameter.
+ *          the blur percentage changes according to the value of the 'blur' parameter.
+ * @license MIT
  */
-const mf = require('mofron');
+const comutl = mofron.util.common;
 
-mf.effect.Shadow = class extends mf.Effect {
+module.exports = class extends mofron.class.Effect {
     /**
-     * initialize shadow effect
+     * initialize effect
      *
-     * @param p1 (object) effect option
-     * @param p1 shadow size
-     * @param p2 shadow color
+     * @param (mixed) value parameter
+     *                key-value: effect config
+     * @param color parameter
+     * @short value,color
+     * @type private
      */
-    constructor (po, p2) {
+    constructor (p1, p2) {
         try {
             super();
             this.name('Shadow');
-            this.prmMap(['value', 'color']);
+            this.shortForm('value', 'color');
             
-            /* default config */
-	    this.blur("0rem");
-	    if (undefined === po) {
-                this.value("0.015rem");
-                this.blur(mf.func.sizeSum(this.value(), this.value()));
-            }
-	    if (undefined === p2) {
-	        this.color([190,190,190]);
+            /* init config */
+            this.confmng().add("value", { type: "size", init: "0.015rem" });
+            this.confmng().add("blur",  { type: "size", init: "0rem" });
+            this.confmng().add('color', { type: "color", init: [190,190,190] });
+            
+            /* set config */
+	    if (0 < arguments.length) {
+                this.config(p1,p2);
 	    }
-	    
-            this.prmOpt(po, p2);
+            
+            ///* default config */
+	    //this.blur("0rem");
+	    //if (undefined === po) {
+            //    this.value("0.015rem");
+            //    this.blur(mf.func.sizeSum(this.value(), this.value()));
+            //}
+	    //if (undefined === p2) {
+	    //    this.color([190,190,190]);
+	    //}
+	    //
+            //this.prmOpt(po, p2);
         } catch (e) {
             console.error(e.stack);
             throw e;
@@ -37,51 +52,71 @@ mf.effect.Shadow = class extends mf.Effect {
     }
     
     /**
-     * setter/getter shadow size
+     * shadow size
      *
-     * @param p1 (string) shadow size (css value)
-     * @param p1 (undefined) call as getter
-     * @return (string) shadow size (css value)
+     * @param (string (size)) shadow size (css value)
+     * @return (string (size)) shadow size (css value)
+     * @type parameter
      */
     value (prm) {
-        try { return this.member("value", "size", prm); } catch (e) {
-            console.error(e.stack);
-            throw e;
-        }
-    }
-    
-    blur (prm) {
-        try { return this.member("blur", "size", prm); } catch (e) {
+        try {
+	    return this.confmng("value", prm);
+	} catch (e) {
             console.error(e.stack);
             throw e;
         }
     }
     
     /**
-     * setter/getter shadow color
-     *
-     * @param p1 (string) shadow color (css value)
-     * @param p1 (undefined) call as getter
-     * @return (string) shadow color (css value)
+     * blur size value
+     * 
+     * @param (string (size)) blur size value
+     * @return (string (size)) blur size value
+     * @type parameter
      */
-    color (prm) {
-        try { return this.member('color', 'color', prm); } catch (e) {
+    blur (prm) {
+        try {
+	    return this.confmng("blur", prm);
+	} catch (e) {
             console.error(e.stack);
             throw e;
         }
     }
     
+    /**
+     * shadow color
+     *
+     * @param (string (size)) shadow color (css value)
+     * @return (string (size)) shadow color (css value)
+     * @type parameter
+     */
+    color (prm) {
+        try {
+	    return this.confmng("color", prm);
+	} catch (e) {
+            console.error(e.stack);
+            throw e;
+        }
+    }
+    
+    /**
+     * effect contents
+     * 
+     * @param (component) target componet
+     * @type private
+     */
     contents (cmp) {
         try {
-            let val3 = mf.func.sizeSum(this.value(), this.value(), this.value());
-            cmp.style({
-                "box-shadow" : val3 + ' ' + val3 + ' ' + this.blur().toString() + ' ' + '0rem ' + this.color().toString()
-            });
+	    let str_val = this.value().toString();
+            let sum_val = comutl.sizesum(str_val, comutl.sizesum(str_val, str_val));
+	    let set_val = {
+	        "box-shadow" : sum_val + ' ' + sum_val + ' ' + this.blur().toString() + ' ' + '0rem ' + this.color().toString()
+            }
+            cmp.style(set_val, { bpref: true });
         } catch (e) {
             console.error(e.stack);
             throw e;
         }
     }
 }
-module.exports = mofron.effect.Shadow;
 /* end of file */

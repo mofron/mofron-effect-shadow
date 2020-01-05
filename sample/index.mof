@@ -1,0 +1,9 @@
+<require>
+    <tag load="mofron-effect-shadow">Shadow</tag>
+</require>
+
+<div size=(1rem,1rem)>
+    <effect>
+        <Shadow blur=0.05rem>0.02rem</Shadow>
+    </effect>
+</div>
