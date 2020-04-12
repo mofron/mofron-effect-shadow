@@ -33,18 +33,6 @@ module.exports = class extends mofron.class.Effect {
 	    if (0 < arguments.length) {
                 this.config(p1,p2);
 	    }
-            
-            ///* default config */
-	    //this.blur("0rem");
-	    //if (undefined === po) {
-            //    this.value("0.015rem");
-            //    this.blur(mf.func.sizeSum(this.value(), this.value()));
-            //}
-	    //if (undefined === p2) {
-	    //    this.color([190,190,190]);
-	    //}
-	    //
-            //this.prmOpt(po, p2);
         } catch (e) {
             console.error(e.stack);
             throw e;
