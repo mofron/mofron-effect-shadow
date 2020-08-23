@@ -1,4 +1,4 @@
-# shadow.js
+# mofron-effect-shadow
 [mofron](https://mofron.github.io/mofron/) is module based frontend framework.
 
 shadow effect for mofron
@@ -11,14 +11,14 @@ this effect makes the component has a shadow.
 
 # Install
 ```
-npm install mofron shadow.js
+npm install mofron mofron-effect-shadow
 ```
 
 # Sample
 ```html
-<require>
+<setting>
     <tag load="mofron-effect-shadow">Shadow</tag>
-</require>
+</setting>
 
 <div size=(1rem,1rem)>
     <effect>

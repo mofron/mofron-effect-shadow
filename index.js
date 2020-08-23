@@ -1,5 +1,5 @@
 /**
- * @file shadow.js
+ * @file mofron-effect-shadow/index.js
  * @brief shadow effect for mofron
  *        this effect makes the component has a shadow.
  * @feature the size changes according to the value of the 'value' parameter.
@@ -21,9 +21,17 @@ module.exports = class extends mofron.class.Effect {
     constructor (p1, p2) {
         try {
             super();
-            this.name('Shadow');
+            this.modname('Shadow');
             this.shortForm('value', 'color');
             
+            this.transition([
+	        "box-shadow",
+		"webkit-box-shadow",
+		"-moz-box-shadow",
+                "-o-box-shadow",
+                "-ms-box-shadow"
+            ]);
+
             /* init config */
             this.confmng().add("value", { type: "size", init: "0.015rem" });
             this.confmng().add("blur",  { type: "size", init: "0rem" });

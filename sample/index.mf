@@ -1,6 +1,6 @@
-<require>
+<setting>
     <tag load="mofron-effect-shadow">Shadow</tag>
-</require>
+</setting>
 
 <div size=(1rem,1rem)>
     <effect>
