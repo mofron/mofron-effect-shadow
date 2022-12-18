@@ -33,8 +33,8 @@ module.exports = class extends mofron.class.Effect {
             ]);
 
             /* init config */
-            this.confmng().add("value", { type: "size", init: "0.015rem" });
-            this.confmng().add("blur",  { type: "size", init: "0rem" });
+            this.confmng().add("value", { type: "size", init: "0.06rem" });
+            this.confmng().add("blur",  { type: "size", init: "0.03rem" });
             this.confmng().add('color', { type: "color", init: [190,190,190] });
             
             /* set config */
@@ -104,9 +104,8 @@ module.exports = class extends mofron.class.Effect {
     contents (cmp) {
         try {
 	    let str_val = this.value().toString();
-            let sum_val = comutl.sizesum(str_val, comutl.sizesum(str_val, str_val));
 	    let set_val = {
-	        "box-shadow" : sum_val + ' ' + sum_val + ' ' + this.blur().toString() + ' ' + '0rem ' + this.color().toString()
+	        "box-shadow" : str_val + ' ' + str_val + ' ' + this.blur().toString() + ' ' + '0rem ' + this.color().toString()
             }
             cmp.style(set_val, { bpref: true });
         } catch (e) {
